@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import Homepage, about  # Import the functions from views.py
-
+from .views import Homepage, about, product, post_detail
 
 urlpatterns = [
-    # path('URL Name', Function)
-    path('', Homepage),
-    path('about', about)
+    path('', Homepage), # localhost:8000
+    path('about', about),
+    path('product', product),
+    path('blog/<int:id>', post_detail)
 ]
