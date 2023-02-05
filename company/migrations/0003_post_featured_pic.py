@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('company', '0002_auto_20230121_1145'),
     ]
-
+    
     operations = [
         migrations.AddField(
             model_name='post',
