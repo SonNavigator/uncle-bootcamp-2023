@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Post, ProductDemo
 from .forms import ContactForm
 from django.db.models import Q 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def Homepage(request):
@@ -26,8 +28,8 @@ def about(request):
 
 
 def product(request):
-    data = ProductDemo.objects.all() # --> SELECT * from company_productdemo
-    context = {'data':data} # attachment
+    data = ProductDemo.objects.all() 
+    context = {'data':data} 
     return render(request, 'company/product.html',context)
 
 
@@ -39,7 +41,6 @@ def contact(request):
             # Save to DB
             form.save()
             return redirect("/")
-
     else:
         form = ContactForm()
 
@@ -54,6 +55,34 @@ def search(request):
     else:
         pass
     return render(request, 'company/search.html', {'posts': posts})
+
+
+def sign_in(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(
+            request, 
+            username=username,
+            password=password
+        )
+
+        if user is not None:
+            # Log user in
+            login(request, user)
+            return redirect('/')
+        messages.error(request, 'Invalid Login')
+
+    return render(request, 'company/sign-in.html')
+
+
+def sign_out(request):
+    # Sign user out
+    logout(request)
+    return redirect('/sign-in')
+
+
 
 
 
