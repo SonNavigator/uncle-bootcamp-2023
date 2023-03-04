@@ -20,6 +20,6 @@ class ContactForm(forms.ModelForm):
             'detail': forms.Textarea(attrs={
                 'class': 'form-control col-xl-8'
             })
-        }
+        } 
 
 
